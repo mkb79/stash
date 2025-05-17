@@ -267,7 +267,7 @@ class StaSh(object):
                     if self.runtime.debug:
                         self.logger.debug("Attempting to load library '{}'...".format(name))
                     try:
-                        self.__dict__[name] = SourceFileLoader(name, fp)
+                        self.__dict__[name] = SourceFileLoader(name, fp).load_module()
                     except Exception as e:
                         self.write_message('%s: failed to load library file (%s)' % (f, repr(e)), error=True)
         finally:  # do not modify environ permanently
