@@ -7,7 +7,7 @@ https://github.com/ywangd/stash
 
 __version__ = '0.7.5'
 
-import imp as pyimp  # rename to avoid name conflict with objc_util
+from importlib.machinery import SourceFileLoader
 import logging
 import logging.handlers
 import os
@@ -267,7 +267,7 @@ class StaSh(object):
                     if self.runtime.debug:
                         self.logger.debug("Attempting to load library '{}'...".format(name))
                     try:
-                        self.__dict__[name] = pyimp.load_source(name, fp)
+                        self.__dict__[name] = SourceFileLoader(name, fp)
                     except Exception as e:
                         self.write_message('%s: failed to load library file (%s)' % (f, repr(e)), error=True)
         finally:  # do not modify environ permanently
